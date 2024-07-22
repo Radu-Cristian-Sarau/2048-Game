@@ -1,19 +1,19 @@
-let board;
-let score = 0;
-const rows = 4;
-const columns = 4;
+var board;
+var score = 0;
+var rows = 4;
+var columns = 4;
 
 window.onload = function() {
     setGame();
 }
 
 function setGame() {
-    /* board = [
+     board = [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0]
-    ] */
+    ]; 
 
     /* board = [
         [2, 2, 2, 2],
@@ -32,6 +32,7 @@ function setGame() {
         }
     }
 
+    // create two 2s to begin with
     setTwo();
     setTwo();
 }
@@ -60,7 +61,8 @@ function setTwo() {
         if (board[r][c] == 0) {
             board[r][c] = 2;
             let tile = document.getElementById(r.toString() + "-" + c.toString());
-            updateTile(tile, 2);
+            tile.innerText = "2";
+            tile.classList.add("x2");
             found = true;
         }
     }
@@ -71,7 +73,7 @@ function updateTile(tile, num) {
     tile.classList.value = "";
     tile.classList.add("tile");
     if (num > 0) {
-        tile.innerText = num;
+        tile.innerText = num.toString();
         if (num <= 4096) { // last number with its own color 
             tile.classList.add("x" + num.toString());
         } else {
@@ -80,7 +82,7 @@ function updateTile(tile, num) {
     }
 }
 
-document.addEventListener("keyup", (e) => {
+document.addEventListener('keyup', (e) => {
     if (e.code == "ArrowLeft") {
         slideLeft();
         setTwo();
@@ -98,7 +100,7 @@ document.addEventListener("keyup", (e) => {
 });
 
 function filterZero(row) {
-    row = row.filter(num => num != 0); // create a new array without zeroes
+    return row.filter(num => num != 0); // create a new array without zeroes
 }
 
 function slide(row) {
@@ -131,13 +133,14 @@ function slideLeft() {
         board[r] = row;
         for (let c = 0; c < columns; c++) {
             let tile = document.getElementById(r.toString() + "-" + c.toString());
-            let num = row[c];
+            let num = board[r][c];
             updateTile(tile, num);
         }
     }
 }
 
 function slideRight() {
+    
     for (let r = 0; r < rows; r++) {
         let row = board[r];
         row.reverse();
